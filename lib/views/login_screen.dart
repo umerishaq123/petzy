@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:pet_app/utils/colors.dart';
+import 'package:pet_app/views/home_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
 import 'package:pet_app/widgets/custom_text_field.dart';
 
@@ -92,6 +94,9 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 35.w),
               child: CustomButtonWidget(
+                onPressed: (){
+                  Get.to(()=>HomeScreen());
+                },
                 backgroundColor: primaryColor,
                 text: 'Log In',
                 textColor: whiteColor,
