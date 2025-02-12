@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pet_app/utils/colors.dart';
+import 'package:pet_app/widgets/custom_buttom_widget.dart';
+import 'package:pet_app/widgets/custom_text_field.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -43,6 +45,61 @@ class LoginScreen extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   color: blackColor,
                 )),
+            Padding(
+              padding: EdgeInsets.only(top: 6.h),
+              child: CustomTextField(
+                iconAssetPath: '',
+                hintText: 'Email',
+                containsIcon: false,
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            Text('Password',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                  color: blackColor,
+                )),
+            Padding(
+              padding: EdgeInsets.only(top: 6.h),
+              child: CustomTextField(
+                isObscure: true,
+                iconAssetPath: '',
+                hintText: 'Password',
+                containsIcon: false,
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Forgot Password?',
+                  style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: primaryColor),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              child: CustomButtonWidget(
+                backgroundColor: primaryColor,
+                text: 'Log In',
+                textColor: whiteColor,
+              ),
+            ),
+            SizedBox(
+              height: 44.h,
+            ),
           ],
         ),
       ),
