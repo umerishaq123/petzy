@@ -35,49 +35,53 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 10.0.w, right: 10.0.w, bottom: 5.0.h),
-      child: TextField(
-        style: TextStyle(
-            color: isEnabled ? blackColor : blackColor.withOpacity(0.5)),
-        obscureText: isObscure && hidePassword,
-        //obscureText: hidePassword,
-        keyboardType:
-            isMultiLine ? TextInputType.multiline : TextInputType.text,
-        minLines: isMultiLine ? minLines : 1,
-        maxLines: isMultiLine ? minLines : 1,
-        controller: textEditingController,
-        onChanged: onChanged,
-        decoration: InputDecoration(
-          prefixIcon: containsIcon
-              ? Padding(
-                  padding: EdgeInsets.all(15.0.r),
-                  child: Image.asset(
-                    iconAssetPath,
-                    width: 20.0.w,
-                    height: 20.0.h,
-                    fit: BoxFit.contain,
-                  ),
-                )
-              : null,
-          hintText: hintText,
-          hintStyle: TextStyle(color: blackColor.withOpacity(0.5)),
-          filled: true,
-          fillColor: isEnabled ? whiteColor : blackColor.withOpacity(0.7),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16.0.r),
-            borderSide: BorderSide.none,
-          ),
-          suffixIcon: isObscure
-              ? GestureDetector(
-                  onTap: onTogglePasswordView,
-                  child: Icon(
-                    hidePassword ? Icons.visibility_off : Icons.visibility,
-                    color: Colors.grey,
-                  ),
-                )
-              : null,
+    return TextField(
+      style: TextStyle(
+          color: isEnabled ? blackColor : blackColor.withOpacity(0.5)),
+      obscureText: isObscure && hidePassword,
+      //obscureText: hidePassword,
+      keyboardType: isMultiLine ? TextInputType.multiline : TextInputType.text,
+      minLines: isMultiLine ? minLines : 1,
+      maxLines: isMultiLine ? minLines : 1,
+      controller: textEditingController,
+      onChanged: onChanged,
+      decoration: InputDecoration(
+        prefixIcon: containsIcon
+            ? Padding(
+                padding: EdgeInsets.all(15.0.r),
+                child: Image.asset(
+                  iconAssetPath,
+                  width: 20.0.w,
+                  height: 20.0.h,
+                  fit: BoxFit.contain,
+                ),
+              )
+            : null,
+        hintText: hintText,
+        hintStyle: TextStyle(color: blackColor.withOpacity(0.5)),
+        filled: true,
+        fillColor: isEnabled ? whiteColor : blackColor.withOpacity(0.7),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          borderSide: BorderSide(color: textFieldBordercolor, width: 1.w),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          borderSide: BorderSide(color: textFieldBordercolor, width: 1.w),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.r),
+          borderSide: BorderSide.none,
+        ),
+        suffixIcon: isObscure
+            ? GestureDetector(
+                onTap: onTogglePasswordView,
+                child: Icon(
+                  hidePassword ? Icons.visibility_off : Icons.visibility,
+                  color: Colors.grey,
+                ),
+              )
+            : null,
       ),
     );
   }
