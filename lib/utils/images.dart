@@ -11,3 +11,7 @@ const String post2Icon = 'assets/images/post2.png';
 const String pawsIcon = 'assets/images/pawsIcon.png';
 const String chatIcon = 'assets/images/chatIcon.png';
 const String shareIcon = 'assets/images/share.png';
+const String addPostIcon = 'assets/images/addPostIcon.png';
+const String contestIcon = 'assets/images/contestIcon.png';
+const String homeIcon = 'assets/images/homeBlankIcon.png';
+const String petIcon = 'assets/images/petIcon.png';
