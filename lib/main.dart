@@ -4,6 +4,10 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/views/nav_bar_screen.dart';
+import 'package:pet_app/views/peofile_screen/follower_screen.dart';
+import 'package:pet_app/views/peofile_screen/notification_screen.dart';
+import 'package:pet_app/views/peofile_screen/profile_screen.dart';
+import 'package:pet_app/views/posts/add_post_screen.dart';
 import 'package:pet_app/views/splash_screen.dart';
 
 Future<void> main() async {
@@ -42,7 +46,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
             // home: const SplashScreen(),
-             home:  NavBarScreen(),
+             home:  NotificationScreen(),
           );
         });
   }
