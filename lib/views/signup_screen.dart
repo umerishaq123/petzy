@@ -6,18 +6,22 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
-import 'package:pet_app/views/forgot_password_screen.dart';
 import 'package:pet_app/views/home_screen.dart';
-import 'package:pet_app/views/nav_bar_screen.dart';
-import 'package:pet_app/views/signup_screen.dart';
+import 'package:pet_app/views/login_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
 import 'package:pet_app/widgets/custom_sign_divider.dart';
 import 'package:pet_app/widgets/custom_text_field.dart';
 import 'package:pet_app/widgets/social_signin_button.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+   bool isChecked = false; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                 height: 100.h,
               ),
               Text(
-                'Log In',
+                'Create Account',
                 style: TextStyle(
                     fontSize: 30.sp,
                     fontWeight: FontWeight.w700,
@@ -51,7 +55,24 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 40.h,
               ),
-              Text('Email',
+              Text('Name',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: blackColor,
+                  )),
+              Padding(
+                padding: EdgeInsets.only(top: 6.h),
+                child: CustomTextField(
+                  iconAssetPath: '',
+                  hintText: 'Name',
+                  containsIcon: false,
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+                Text('Email',
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
@@ -86,43 +107,75 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      Get.to(ForgotPasswordScreen());
-                    },
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: primaryColor),
-                    ),
-                  ),
-                ],
+               Text('Confirm password',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: blackColor,
+                  )),
+              Padding(
+                padding: EdgeInsets.only(top: 6.h),
+                child: CustomTextField(
+                  isObscure: true,
+                  iconAssetPath: '',
+                  hintText: 'Confirm password',
+                  containsIcon: false,
+                ),
               ),
+               SizedBox(
+                height: 20.h,
+              ),
+           Row(
+  mainAxisAlignment: MainAxisAlignment.start,
+  children: [
+    Transform.scale(
+      scale: 1.2, // Adjust size
+      child: Checkbox(
+        shape: CircleBorder(), // Makes checkbox circular
+        value: isChecked, // Boolean value to track state
+        onChanged: (bool? value) {
+          setState(() {
+            isChecked = value!;
+          });
+        },
+        activeColor: primaryColor, // Checkbox fill color
+        checkColor: Colors.white, // Tick mark color
+      ),
+    ),
+    SizedBox(width: 3.w), // Spacing between checkbox and text
+    Expanded(
+      child: Text(
+        'I accept the terms and privacy policy',
+        style: TextStyle(
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w600,
+          color: primaryColor,
+        ),
+      ),
+    ),
+  ],
+),
+
               SizedBox(
-                height: 30.h,
+                height: 10.h,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 35.w),
                 child: CustomButtonWidget(
                   onPressed: (){
-                    Get.to(()=>NavBarScreen());
+                    Get.to(()=>HomeScreen());
                   },
                   backgroundColor: primaryColor,
-                  text: 'Log In',
+                  text: 'Create account',
                   textColor: whiteColor,
                 ),
               ),
-               SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                   "Don't have an account?",
+                   "Already have an account?",
                     style: GoogleFonts.playfairDisplay(
                       textStyle: const TextStyle(
                         fontSize: 16,
@@ -132,7 +185,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   RichText(
                     text: TextSpan(
-                      text:" SignUp",
+                      text:" SignIn",
                       style: GoogleFonts.playfairDisplay(
                         textStyle: const TextStyle(
                           fontSize: 16,
@@ -142,58 +195,25 @@ class LoginScreen extends StatelessWidget {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           print("Sign up pressed");
-                          Get.to(() => const SignUpScreen());
+                          Get.to(() => const LoginScreen());
                         },
                     ),
                   ),
                 ],
               ),
+                SizedBox(height: 10.h),
               
               
-              SizedBox(
-                height: 44.h,
-              ),
-              CustomDivider(text: 'Or Login with',),
-               SizedBox(
-                height: 20.h,
-              ),
-            Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: SocialSignInButton(
-                      text: "Google",
-                      icon: FontAwesomeIcons.google,
-                      onPressed: () {},
-                      textColor: Colors.black,
-                      color: whiteColor,
-                    ),
-                  ),
-                  SizedBox(width: 20.w), // Add spacing between buttons
-                  Expanded(
-                    child: SocialSignInButton(
-                      text: "Apple",
-                      icon: FontAwesomeIcons.apple,
-                      onPressed: () {},
-                      textColor: Colors.black,
-                      color: whiteColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-               SizedBox(
-                height: 30.h,
-              ),
+             
+         
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 30.w),
                 child: Center(
                   child: Text("By creating an account or signing you agree to our Terms and Conditions",
                   textAlign: TextAlign.center,),
                 ),
-              )
+              ),
+                  SizedBox(height: 10.h),
 
             ],
           ),

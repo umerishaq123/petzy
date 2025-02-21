@@ -160,6 +160,8 @@ class OnBoardingScreen extends StatelessWidget {
               ),
             ),
           ),
+        
+        
         ],
       ),
     );

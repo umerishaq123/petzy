@@ -4,45 +4,87 @@ import 'package:get/get.dart';
 import 'package:pet_app/controllers/nav_bar_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
-
+import 'package:pet_app/views/home_screen.dart';
+import 'package:pet_app/views/posts/add_post_screen.dart';
 
 class NavBarScreen extends StatelessWidget {
- NavBarScreen({super.key});
+  NavBarScreen({super.key});
 
-  final NavController controller=Get.isRegistered()?Get.find<NavController>():Get.put(NavController());
+  final NavController controller = Get.isRegistered()
+      ? Get.find<NavController>()
+      : Get.put(NavController());
+
+  // List of screens to show for each tab
+  final List<Widget> screens = [
+    HomeScreen(),      // Replace with your actual screen widgets
+    HomeScreen(),
+    AddPostScreen(),
+    HomeScreen(),
+    HomeScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Show the selected screen based on tab index
+      body: Obx(() => screens[controller.selectedIndex.value]),
+      
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(), // Creates notch for FAB
-        notchMargin: 8.0,
+        shape: AutomaticNotchedShape(
+          RoundedRectangleBorder(),
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+        notchMargin: 10.0,
         child: Container(
           height: 60,
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              navBarItem(homeIcon, "Home", 0),
-              navBarItem(chatIcon, "Chats", 1),
-              SizedBox(width: 40), // Space for FAB
-              navBarItem(addPostIcon, "Add post", 2),
-              navBarItem(contestIcon, "Contests", 3),
+              // Left side items
+              Row(
+                children: [
+                  navBarItem(homeIcon, "Home", 0),
+                  SizedBox(width: 30.w),
+                  navBarItem(messageIcon, "Chats", 1),
+                ],
+              ),
+              // Right side items
+              Row(
+                children: [
+                  navBarItem(addPostIcon, "Add post", 3),
+                  SizedBox(width: 30.w),
+                  navBarItem(contestIcon, "Contests", 4),
+                ],
+              ),
             ],
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-  onPressed: () {
-    controller.changeTab(2); // Set 'Add post' as active tab
-  },
-  backgroundColor: Colors.green,
-  child: Image.asset(petIcon, width: 30.w, color: whiteColor),
-  // child: Icon(Icons.add, color: Colors.white, size: 30),
-),
-floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding:  EdgeInsets.only(right: 35.w),
+        child: SizedBox(
+          height: 70.h,
+          width: 70.w,
+          child: FloatingActionButton(
+            onPressed: () {
+              controller.changeTab(2);
+            },
+            backgroundColor: Colors.green,
+            shape: const CircleBorder(),
+            child: Image.asset(
+              petIcon,
+              width: 40.w,
+              color: whiteColor,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-  
 
   Widget navBarItem(String icon, String label, int index) {
     return Obx(() => GestureDetector(
@@ -52,17 +94,13 @@ floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(icon,width: 24.w, color: controller.selectedIndex.value == index
+              Image.asset(
+                icon,
+                width: 24.w,
+                color: controller.selectedIndex.value == index
                     ? Colors.green
                     : Colors.grey,
               ),
-              // Icon(
-              //   icon,
-              //   color: controller.selectedIndex.value == index
-              //       ? Colors.green
-              //       : Colors.grey,
-              //   size: 24,
-              // ),
               Text(
                 label,
                 style: TextStyle(
