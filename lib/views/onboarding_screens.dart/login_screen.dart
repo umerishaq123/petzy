@@ -4,12 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pet_app/controllers/auth_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
-import 'package:pet_app/views/forgot_password_screen.dart';
-import 'package:pet_app/views/home_screen.dart';
-import 'package:pet_app/views/nav_bar_screen.dart';
-import 'package:pet_app/views/signup_screen.dart';
+import 'package:pet_app/views/onboarding_screens.dart/forgot_password_screen.dart';
+import 'package:pet_app/views/home_screens/home_screen.dart';
+import 'package:pet_app/views/home_screens/nav_bar_screen.dart';
+import 'package:pet_app/views/onboarding_screens.dart/signup_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
 import 'package:pet_app/widgets/custom_sign_divider.dart';
 import 'package:pet_app/widgets/custom_text_field.dart';
@@ -20,6 +21,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       final AuthController controller=Get.isRegistered()?Get.find<AuthController>():Get.put(AuthController(),permanent: true);
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SingleChildScrollView(
@@ -60,6 +63,7 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 6.h),
                 child: CustomTextField(
+                  textEditingController: controller.loginemailController,
                   iconAssetPath: '',
                   hintText: 'Email',
                   containsIcon: false,
@@ -77,6 +81,7 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 6.h),
                 child: CustomTextField(
+                  textEditingController: controller.loginpasswordController,
                   isObscure: true,
                   iconAssetPath: '',
                   hintText: 'Password',
@@ -109,8 +114,10 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 35.w),
                 child: CustomButtonWidget(
-                  onPressed: (){
-                    Get.to(()=>NavBarScreen());
+                  onPressed: ()async{
+                    await controller.login();
+
+                  
                   },
                   backgroundColor: primaryColor,
                   text: 'Log In',

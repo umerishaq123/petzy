@@ -1,17 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pet_app/utils/colors.dart';
-import 'package:pet_app/views/nav_bar_screen.dart';
+import 'package:pet_app/views/home_screens/nav_bar_screen.dart';
 import 'package:pet_app/views/peofile_screen/follower_screen.dart';
 import 'package:pet_app/views/peofile_screen/notification_screen.dart';
 import 'package:pet_app/views/peofile_screen/profile_screen.dart';
 import 'package:pet_app/views/posts/add_post_screen.dart';
-import 'package:pet_app/views/splash_screen.dart';
+import 'package:pet_app/views/onboarding_screens.dart/splash_screen.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  
+   WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter binding
+  await Firebase.initializeApp(); 
+    configLoading();
   runApp(MyApp());
 }
 
@@ -45,9 +50,19 @@ class MyApp extends StatelessWidget {
                 primary: primaryColor,
               ),
             ),
-            // home: const SplashScreen(),
-             home:  NotificationScreen(),
+             builder: EasyLoading.init(), 
+            home: const SplashScreen(),
+            //  home:  NotificationScreen(),
           );
         });
   }
+}
+void configLoading() {
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.circle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..maskType = EasyLoadingMaskType.black
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..dismissOnTap = false;
 }

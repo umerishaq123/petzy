@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pet_app/controllers/auth_controller.dart';
 import 'package:pet_app/controllers/home_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
@@ -16,6 +17,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthController authController=Get.isRegistered()?Get.find<AuthController>():Get.put(AuthController());
+    print(":::::::::the user id is here :${authController.userData.value?.uid}");
     return Scaffold(
       backgroundColor: halfWhiteColor,
       body: SingleChildScrollView(

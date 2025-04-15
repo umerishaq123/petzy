@@ -46,7 +46,7 @@ class CustomButtonWidget extends StatelessWidget {
         margin: buttonMargin ??
             EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.0.h),
         width: width ?? double.infinity,
-        height: height ?? 48.h,
+        height: height ?? 55.h,
         child: Center(
           child: child ??
               Text(

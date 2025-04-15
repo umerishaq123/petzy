@@ -4,22 +4,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
-import 'package:pet_app/views/home_screen.dart';
-import 'package:pet_app/views/login_screen.dart';
+import 'package:pet_app/views/home_screens/home_screen.dart';
+import 'package:pet_app/views/onboarding_screens.dart/otp_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
 import 'package:pet_app/widgets/custom_sign_divider.dart';
 import 'package:pet_app/widgets/custom_text_field.dart';
 import 'package:pet_app/widgets/social_signin_button.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({super.key});
 
-  @override
-  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
-}
-
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-   bool isChecked = false; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +28,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 height: 100.h,
               ),
               Text(
-                'Reset Password',
+                'Forgot Password',
                 style: TextStyle(
                     fontSize: 30.sp,
                     fontWeight: FontWeight.w700,
@@ -53,8 +47,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               SizedBox(
                 height: 40.h,
               ),
-           
-              Text('Password',
+              Text('Email',
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
@@ -63,49 +56,27 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               Padding(
                 padding: EdgeInsets.only(top: 6.h),
                 child: CustomTextField(
-                  isObscure: true,
                   iconAssetPath: '',
-                  hintText: 'Password',
+                  hintText: 'Email',
                   containsIcon: false,
                 ),
               ),
+             
               SizedBox(
-                height: 20.h,
-              ),
-               Text('Confirm password',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400,
-                    color: blackColor,
-                  )),
-              Padding(
-                padding: EdgeInsets.only(top: 6.h),
-                child: CustomTextField(
-                  isObscure: true,
-                  iconAssetPath: '',
-                  hintText: 'Confirm password',
-                  containsIcon: false,
-                ),
-              ),
-               SizedBox(
                 height: 30.h,
               ),
-        
-            
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 35.w),
                 child: CustomButtonWidget(
                   onPressed: (){
-                    Get.to(()=>LoginScreen());
+                    Get.to(()=>OtpScreen());
                   },
                   backgroundColor: primaryColor,
-                  text: 'Reset Password',
+                  text: 'Send OTP',
                   textColor: whiteColor,
                 ),
               ),
-             
-         
-            
+  
 
             ],
           ),
