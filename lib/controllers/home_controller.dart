@@ -3,6 +3,32 @@ import 'package:pet_app/models/user_model.dart';
 import 'package:pet_app/utils/images.dart';
 
 class HomeController extends GetxController{
+  var isShareList = <bool>[].obs;
+      final RxBool isUserSelected = false.obs;
+
+
+
+ @override
+  void onInit() {
+    super.onInit();
+    // Initialize your user data here or wherever you load it
+    // Then initialize isShareList
+    initializeShareList();
+  }
+
+  void initializeShareList() {
+    isShareList.value = List.filled(user.value.followerList.length, false);
+  }
+
+  void shareChecked(int index, bool value) {
+    if (index >= 0 && index < isShareList.length) {
+      isShareList[index] = value;
+      isShareList.refresh(); // Ensure UI updates
+      isUserSelected.value = isShareList.contains(true);
+      
+    }
+  }
+
  List<String>  posts=[
   pet1Icon,
   pet2Icon,
@@ -22,7 +48,7 @@ class HomeController extends GetxController{
 ].obs;
 
 
-   var user = Usermodel(
+   var user = Usermodelnew(
     name: 'katty_01',
     profile: dummyImage,
     feedData: [
@@ -44,5 +70,7 @@ class HomeController extends GetxController{
                   Follower(profilePic: dummyImage, subtitle:" @Diamondruff", title:" Diamond_in_the_Ruff", isfollowing: true),
     ], followingCount: 1202, location: 'islamabad behria', postcount: 555,
   ).obs; 
+
+  
 
 }

@@ -23,3 +23,8 @@ const String petShareIcon = 'assets/images/petShareIcon.png';
 const String pet1Icon = 'assets/images/pet1.png';
 const String pet2Icon = 'assets/images/pet2.png';
 const String pet13con = 'assets/images/pet3.png';
+const String contestScreenIcon = 'assets/images/Contestimg.png';
+const String galleryIcon = 'assets/images/galleryicons.png';
+const String cameraIcon = 'assets/images/Camera .png';
+const String sendIcon = 'assets/images/Send.png';
+

@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
-import 'package:pet_app/views/login_screen.dart';
+import 'package:pet_app/views/onboarding_screens.dart/login_screen.dart';
 
-import '../controllers/onboarding_controller.dart';
-import '../widgets/custom_buttom_widget.dart';
+import '../../controllers/onboarding_controller.dart';
+import '../../widgets/custom_buttom_widget.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:pet_app/utils/colors.dart';
-import 'package:pet_app/views/reset_password_screen.dart';
+import 'package:pet_app/views/onboarding_screens.dart/reset_password_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
 
 class OtpScreen extends StatelessWidget {
