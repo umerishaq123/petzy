@@ -1,0 +1,30 @@
+const String firstOnboarding = 'assets/images/first_onboarding.png';
+const String secondOnboarding = 'assets/images/second_onboarding.png';
+const String thirdOnboarding = 'assets/images/third_onboarding.png';
+
+const String rightArrow = 'assets/images/arrow_right.png';
+const String dummyImage = 'assets/images/petdummyProfile.png';
+const String backgroundImage = 'assets/images/petBackgroundImage.png';
+const String optionIcon = 'assets/images/optionIcon.png';
+const String post1Icon = 'assets/images/post1.png';
+const String post2Icon = 'assets/images/post2.png';
+const String pawsIcon = 'assets/images/pawsIcon.png';
+const String chatIcon = 'assets/images/chatIcon.png';
+const String shareIcon = 'assets/images/share.png';
+const String addPostIcon = 'assets/images/addPostIcon.png';
+const String contestIcon = 'assets/images/contestIcon.png';
+const String homeIcon = 'assets/images/homeBlankIcon.png';
+const String petIcon = 'assets/images/petIcon.png';
+const String googleIcon = 'assets/images/Google_logo.png';
+const String appleIcon = 'assets/images/Apple.png';
+const String crossIcon = 'assets/images/cross.png';
+const String messageIcon = 'assets/images/messageIcon.png';
+const String petShareIcon = 'assets/images/petShareIcon.png';
+const String pet1Icon = 'assets/images/pet1.png';
+const String pet2Icon = 'assets/images/pet2.png';
+const String pet13con = 'assets/images/pet3.png';
+const String contestScreenIcon = 'assets/images/Contestimg.png';
+const String galleryIcon = 'assets/images/galleryicons.png';
+const String cameraIcon = 'assets/images/Camera .png';
+const String sendIcon = 'assets/images/Send.png';
+
