@@ -68,7 +68,7 @@ class HomeController extends GetxController{
       Follower(profilePic: dummyImage, subtitle:" @Diamondruff", title:" Diamond_in_the_Ruff", isfollowing: false),
             Follower(profilePic: dummyImage, subtitle:" @Diamondruff", title:" Diamond_in_the_Ruff", isfollowing: true),
                   Follower(profilePic: dummyImage, subtitle:" @Diamondruff", title:" Diamond_in_the_Ruff", isfollowing: true),
-    ], followingCount: 1202, location: 'islamabad behria', postcount: 555,
+    ], followingCount: 1202, location: 'islamabad behria', postcount: 555, issubscribed: false,
   ).obs; 
 
   
