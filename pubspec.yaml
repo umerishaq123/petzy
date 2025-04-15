@@ -46,11 +46,15 @@ dependencies:
   flutter_easyloading: ^3.0.5
   timeago: ^3.7.0
   freezed_annotation: ^3.0.0
+  share_plus: ^10.1.4
+  image_picker: ^1.1.2
  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  json_serializable: ^6.9.4
+  build_runner: ^2.4.15
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

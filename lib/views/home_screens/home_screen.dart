@@ -6,6 +6,7 @@ import 'package:pet_app/controllers/auth_controller.dart';
 import 'package:pet_app/controllers/home_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
+import 'package:pet_app/views/peofile_screen/profile_screen.dart';
 import 'package:pet_app/widgets/custom_feed_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -31,9 +32,14 @@ class HomeScreen extends StatelessWidget {
             ),
         
             Center(
-              child: CircleAvatar(
-                radius: 40.r,
-                foregroundImage: AssetImage(controller.user.value.profile),
+              child: GestureDetector(
+                onTap: (){
+                  Get.to(ProfileScreen(iscome: true,));
+                },
+                child: CircleAvatar(
+                  radius: 40.r,
+                  foregroundImage: AssetImage(controller.user.value.profile),
+                ),
               ),
             ),
              SizedBox(
