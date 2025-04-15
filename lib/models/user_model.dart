@@ -7,6 +7,7 @@ class Usermodelnew {
   final int followingCount;
   final List<FeedModel> feedData;
   final List<Follower> followerList;
+  final bool issubscribed;
 
   Usermodelnew(
       {required this.feedData,
@@ -16,7 +17,8 @@ class Usermodelnew {
       required this.followerList,
       required this.followingCount,
       required this.location,
-      required this.postcount});
+      required this.postcount,
+      required this.issubscribed});
 }
 
 class FeedModel {

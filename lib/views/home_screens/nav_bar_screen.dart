@@ -21,7 +21,7 @@ class NavBarScreen extends StatelessWidget {
     HomeScreen(),      // Replace with your actual screen widgets
  AllChatsScreen(),
     AddPostScreen(),
-    HomeScreen(),
+   AddPostScreen(),
     ContestScreen(),
   ];
 

@@ -6,6 +6,7 @@ import 'package:pet_app/models/user_model.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
 import 'package:pet_app/views/home_screens/search_screen.dart';
+import 'package:pet_app/views/peofile_screen/profile_screen.dart';
 import 'package:pet_app/widgets/cutom_alert_box.dart';
 
 class CustomFeedWidget extends StatelessWidget {
@@ -18,75 +19,80 @@ class CustomFeedWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 33.r,
-                    backgroundColor: whiteColor,
-                  ),
-                  CircleAvatar(
-                    radius: 30.r,
-                    foregroundImage: AssetImage(feedData.image),
-                  ),
-                ],
-              ),
-              SizedBox(width: 10.w), // Add some spacing between the avatar and the text
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          GestureDetector(
+            onTap: (){
+                Get.to(ProfileScreen(iscome: false));
+            },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  alignment: Alignment.center,
                   children: [
-                    Text(
-                      feedData.petName,
-                      style: GoogleFonts.quicksand(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16.sp,
-                        color: blackColor,
-                      ),
+                    CircleAvatar(
+                      radius: 33.r,
+                      backgroundColor: whiteColor,
                     ),
-                  
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          feedData.createdAt,
-                          style: GoogleFonts.quicksand(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp,
-                            color: blackColor,
-                          ),
-                        ),
-                        GestureDetector(
-                         onTap: () {
-    showDialog(
-      context: context,
-      builder: (context) => CustomAlertBox(),
-    );
-  },
-                          child: Image.asset(
-                            optionIcon,
-                            width: 25.w,
-                          ),
-                        ),
-                      ],
-                    ),
-                   // Add some spacing between the date and the description
-                    Text(
-                      feedData.description,
-                      style: GoogleFonts.quicksand(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12.sp,
-                        color: blackColor,
-                      ),
-                      softWrap: true,
+                    CircleAvatar(
+                      radius: 30.r,
+                      foregroundImage: AssetImage(feedData.image),
                     ),
                   ],
                 ),
-              ),
-            ],
+                SizedBox(width: 10.w), // Add some spacing between the avatar and the text
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        feedData.petName,
+                        style: GoogleFonts.quicksand(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16.sp,
+                          color: blackColor,
+                        ),
+                      ),
+                    
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            feedData.createdAt,
+                            style: GoogleFonts.quicksand(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.sp,
+                              color: blackColor,
+                            ),
+                          ),
+                          GestureDetector(
+                           onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => CustomAlertBox(),
+                );
+              },
+                            child: Image.asset(
+                              optionIcon,
+                              width: 25.w,
+                            ),
+                          ),
+                        ],
+                      ),
+                     // Add some spacing between the date and the description
+                      Text(
+                        feedData.description,
+                        style: GoogleFonts.quicksand(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12.sp,
+                          color: blackColor,
+                        ),
+                        softWrap: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 10.h,),
        Stack(

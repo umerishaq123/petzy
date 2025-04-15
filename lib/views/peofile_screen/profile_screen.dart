@@ -8,9 +8,11 @@ import 'package:pet_app/utils/images.dart';
 import 'package:pet_app/views/peofile_screen/follower_screen.dart';
 import 'package:pet_app/views/peofile_screen/following_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen({super.key});
+  final bool iscome;
+  ProfileScreen({super.key,required this.iscome});
 
   final HomeController controller = Get.isRegistered()
       ? Get.find<HomeController>()
@@ -170,16 +172,31 @@ class ProfileScreen extends StatelessWidget {
                           borderRadius: 10.r,
                           textColor: whiteColor,
                           backgroundColor: primaryColor,
-                          text: "Follow",
+                          text:iscome?"View pet details":
+                          
+                           "Follow",
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Image.asset(
-                          petShareIcon,
-                          width: 50.w,
-                        ),
-                      ),
+                  GestureDetector(
+  onTap: () async {
+    try {
+      await Share.share(
+        'Check out this pet profile!', // Your share message
+        subject: 'Pet Profile', // Optional subject for email shares
+      );
+    } catch (e) {
+      print('Error sharing: $e');
+      // Optionally show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not share: $e')),
+      );
+    }
+  },
+  child: Image.asset(
+    petShareIcon,
+    width: 50.w,
+  ),
+),
                     ],
                   ),
                 ],
