@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pet_app/models/user_model.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
+import 'package:pet_app/views/home_screens/search_screen.dart';
+import 'package:pet_app/widgets/cutom_alert_box.dart';
 
 class CustomFeedWidget extends StatelessWidget {
   final FeedModel feedData;
@@ -56,9 +59,17 @@ class CustomFeedWidget extends StatelessWidget {
                             color: blackColor,
                           ),
                         ),
-                        Image.asset(
-                          optionIcon,
-                          width: 25.w,
+                        GestureDetector(
+                         onTap: () {
+    showDialog(
+      context: context,
+      builder: (context) => CustomAlertBox(),
+    );
+  },
+                          child: Image.asset(
+                            optionIcon,
+                            width: 25.w,
+                          ),
                         ),
                       ],
                     ),
@@ -104,7 +115,11 @@ class CustomFeedWidget extends StatelessWidget {
           SizedBox(height: 5.h,),
            Image.asset(chatIcon,width: 45.w,),
                 SizedBox(height: 5.h,),
-                 Image.asset(shareIcon,width: 45.w,),
+                 GestureDetector(
+                  onTap: (){
+Get.to(()=>SearchScreen());
+                  },
+                  child: Image.asset(shareIcon,width: 45.w,)),
                  ],
                ),
        )

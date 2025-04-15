@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:pet_app/controllers/nav_bar_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
-import 'package:pet_app/views/home_screen.dart';
+import 'package:pet_app/views/chat_screens/all_chats_screen.dart';
+import 'package:pet_app/views/contest/contest_screen.dart';
+import 'package:pet_app/views/home_screens/home_screen.dart';
 import 'package:pet_app/views/posts/add_post_screen.dart';
 
 class NavBarScreen extends StatelessWidget {
@@ -17,10 +19,10 @@ class NavBarScreen extends StatelessWidget {
   // List of screens to show for each tab
   final List<Widget> screens = [
     HomeScreen(),      // Replace with your actual screen widgets
-    HomeScreen(),
+ AllChatsScreen(),
     AddPostScreen(),
     HomeScreen(),
-    HomeScreen(),
+    ContestScreen(),
   ];
 
   @override

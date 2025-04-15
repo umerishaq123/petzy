@@ -1,4 +1,4 @@
-class Usermodel {
+class Usermodelnew {
   final String name;
   final String profile;
   final String location;
@@ -8,7 +8,7 @@ class Usermodel {
   final List<FeedModel> feedData;
   final List<Follower> followerList;
 
-  Usermodel(
+  Usermodelnew(
       {required this.feedData,
       required this.name,
       required this.profile,

@@ -4,10 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pet_app/controllers/auth_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
-import 'package:pet_app/views/home_screen.dart';
-import 'package:pet_app/views/login_screen.dart';
+import 'package:pet_app/views/home_screens/home_screen.dart';
+import 'package:pet_app/views/onboarding_screens.dart/login_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
 import 'package:pet_app/widgets/custom_sign_divider.dart';
 import 'package:pet_app/widgets/custom_text_field.dart';
@@ -22,6 +23,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
    bool isChecked = false; 
+   final AuthController controller=Get.isRegistered()?Get.find<AuthController>():Get.put(AuthController(),permanent: true);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: EdgeInsets.only(top: 6.h),
                 child: CustomTextField(
+                  textEditingController: controller.nameController,
                   iconAssetPath: '',
                   hintText: 'Name',
                   containsIcon: false,
@@ -81,6 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: EdgeInsets.only(top: 6.h),
                 child: CustomTextField(
+                  textEditingController: controller.emailController,
                   iconAssetPath: '',
                   hintText: 'Email',
                   containsIcon: false,
@@ -98,6 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: EdgeInsets.only(top: 6.h),
                 child: CustomTextField(
+                  textEditingController: controller.passwordController,
                   isObscure: true,
                   iconAssetPath: '',
                   hintText: 'Password',
@@ -116,6 +121,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: EdgeInsets.only(top: 6.h),
                 child: CustomTextField(
+                  textEditingController: controller.confirmpasswordController,
                   isObscure: true,
                   iconAssetPath: '',
                   hintText: 'Confirm password',
@@ -162,8 +168,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 35.w),
                 child: CustomButtonWidget(
-                  onPressed: (){
-                    Get.to(()=>HomeScreen());
+                  onPressed: ()async{
+                 await  controller.signUp();
+                    // Get.to(()=>HomeScreen());
                   },
                   backgroundColor: primaryColor,
                   text: 'Create account',
