@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pet_app/controllers/payment_controller.dart';
 import 'package:pet_app/controllers/pet_event_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
@@ -33,6 +34,7 @@ class _RegisterParticipateScreenState extends State<RegisterParticipateScreen> {
   @override
   Widget build(BuildContext context) {
       final PetEventController petEventController=Get.isRegistered()?Get.find<PetEventController>():Get.put(PetEventController(),permanent: true);
+      final PaymentController paymentController=Get.isRegistered()?Get.find<PaymentController>():Get.put(PaymentController(),permanent: true);
 
     return Scaffold(
       appBar: AppBar(
@@ -95,8 +97,8 @@ SizedBox(height: 20,),
             Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit quisque",
             style: GoogleFonts.quicksand(fontSize: 16.sp,
              fontWeight: FontWeight.w400),),
-              SizedBox(height:20.h ,),
-            CustomFeeCardWidget(onPayNowPressed: () {  },),
+            
+           
               SizedBox(height:20.h ,),
             
                Padding(
@@ -203,7 +205,20 @@ SizedBox(height: 20,),
                    CustomButtonWidget(text: "Next",
                    textColor: whiteColor,
                    onPressed: (){
-                    Get.to(PostDetailScreen());
+          showDialog(
+  context: context,
+  builder: (context) => CustomFeeCardDialog(
+    participationFee: 30.0,
+    petType: "Cat",
+    currency: "\$",
+    onPayNowPressed: ()async {
+       await paymentController.makePayment("500");
+    // Dismiss dialog
+      // Add your payment logic here
+    },
+  ),
+);
+
                    },)
                  
           ],),
