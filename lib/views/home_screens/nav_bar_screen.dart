@@ -6,6 +6,7 @@ import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
 import 'package:pet_app/views/chat_screens/all_chats_screen.dart';
 import 'package:pet_app/views/contest/contest_screen.dart';
+import 'package:pet_app/views/discovery_view.dart';
 import 'package:pet_app/views/home_screens/home_screen.dart';
 import 'package:pet_app/views/posts/add_post_screen.dart';
 
@@ -20,7 +21,7 @@ class NavBarScreen extends StatelessWidget {
   final List<Widget> screens = [
     HomeScreen(),      // Replace with your actual screen widgets
  AllChatsScreen(),
-    AddPostScreen(),
+    DiscoveryScreen(),
    AddPostScreen(),
     ContestScreen(),
   ];

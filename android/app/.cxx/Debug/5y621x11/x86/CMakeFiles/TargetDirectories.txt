@@ -1,0 +1,2 @@
+D:/petzy_app/android/app/.cxx/Debug/5y621x11/x86/CMakeFiles/edit_cache.dir
+D:/petzy_app/android/app/.cxx/Debug/5y621x11/x86/CMakeFiles/rebuild_cache.dir

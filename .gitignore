@@ -5,11 +5,17 @@
 *.swp
 .DS_Store
 .atom/
+<<<<<<< HEAD
+.buildlog/
+.history
+.svn/
+=======
 .build/
 .buildlog/
 .history
 .svn/
 .swiftpm/
+>>>>>>> aca913fefa8b4bfd95e3bad88ad355d6b5f46b6d
 migrate_working_dir/
 
 # IntelliJ related
@@ -43,6 +49,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+<<<<<<< HEAD
+=======
 
 # FVM Version Cache
 .fvm/
+>>>>>>> aca913fefa8b4bfd95e3bad88ad355d6b5f46b6d

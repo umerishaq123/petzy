@@ -5,7 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
+<<<<<<< HEAD
+	<string>Water Goals</string>
+=======
 	<string>Pet App</string>
+>>>>>>> aca913fefa8b4bfd95e3bad88ad355d6b5f46b6d
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +17,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
+<<<<<<< HEAD
+	<string>water_goals</string>
+=======
 	<string>pet_app</string>
+>>>>>>> aca913fefa8b4bfd95e3bad88ad355d6b5f46b6d
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

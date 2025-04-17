@@ -1,8 +1,9 @@
+import 'dart:io';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/models/pet_event_model.dart';
 import 'package:pet_app/utils/images.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 class PetEventController extends GetxController {
   List<PetEventModel> peteventList = <PetEventModel>[].obs;
 
@@ -10,6 +11,21 @@ class PetEventController extends GetxController {
 
   //image picker
   final RxString pickedImagePath = ''.obs;
+
+  // Store selected images
+  var selectedImages = <File>[].obs;
+
+  Future<void> pickImagesFromGallery() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: true,
+    );
+
+    if (result != null) {
+      selectedImages.value =
+          result.paths.map((path) => File(path!)).toList();
+    }
+  }
 
   Future<void> pickImageFromGallery() async {
     

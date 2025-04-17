@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pet_app/utils/colors.dart';
-import 'package:pet_app/utils/images.dart';
-import 'package:pet_app/widgets/custom_buttom_widget.dart';
 
 class DeleteAlertBox extends StatelessWidget {
   const DeleteAlertBox({super.key});
