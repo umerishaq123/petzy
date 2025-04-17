@@ -1,26 +1,28 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:pet_app/models/user_model_firebase.dart';
 import 'package:pet_app/utils/colors.dart';
+import 'package:pet_app/utils/extensions/local_storage.dart';
 import 'package:pet_app/utils/snackbar_utilis.dart';
 import 'package:pet_app/views/home_screens/home_screen.dart';
 import 'package:pet_app/views/home_screens/nav_bar_screen.dart';
 import 'package:pet_app/views/onboarding_screens.dart/login_screen.dart';
 
 class AuthController extends GetxController {
+  LocalStorage localStorage = LocalStorage();
   var userData = Rx<UserModel?>(null);
   //login
-  TextEditingController loginemailController=TextEditingController();
-  TextEditingController loginpasswordController=TextEditingController();
+  TextEditingController loginemailController = TextEditingController();
+  TextEditingController loginpasswordController = TextEditingController();
   //Login
-    TextEditingController nameController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-   TextEditingController confirmpasswordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
   var isChecked = false.obs;
 
   void toggleCheckbox(bool? value) {
@@ -59,7 +61,7 @@ class AuthController extends GetxController {
     }
 
     try {
-        EasyLoading.show(status: 'Login Account...');
+      EasyLoading.show(status: 'Login Account...');
 
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -67,100 +69,102 @@ class AuthController extends GetxController {
       );
 
       if (userCredential.user != null) {
-        await _firestore.collection("users").doc(userCredential.user?.uid).update({
-          "image":"assets/images/pet1.png",
-          "lastMessage":"hello",
-          "unreadMessageCount":3,
+        await localStorage.writeValue("userId", userCredential.user!.uid);
+
+      
+
+        await _firestore
+            .collection("users")
+            .doc(userCredential.user?.uid)
+            .update({
+          "image": "assets/images/pet1.png",
+          "lastMessage": "hello",
+          "unreadMessageCount": 3,
           "time": "2 min ago",
-          "isOnline":true,
+          "isOnline": true,
         });
         Get.snackbar(
           "Login Success",
           "Successfully logged in",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: primaryColor,
-          colorText:blackColor,
+          colorText: blackColor,
         );
       }
       Get.offAll(NavBarScreen());
-       EasyLoading.showSuccess("Signup Success");
+      EasyLoading.showSuccess("Signup Success");
     } on FirebaseAuthException catch (e) {
-         EasyLoading.showError(e.message ?? "Signup Failed");
+      EasyLoading.showError(e.message ?? "Signup Failed");
       SnackbarUtils.showCustomSnackbar(
           title: "Login Failed",
           message: e.message ?? "An error occurred",
           backgroundColor: primaryColor);
     } catch (e) {
-        EasyLoading.showError("Something went wrong");
+      EasyLoading.showError("Something went wrong");
       SnackbarUtils.showCustomSnackbar(
           title: "Error",
           message: "Something went wrong",
-          backgroundColor:primaryColor);
+          backgroundColor: primaryColor);
     } finally {
-        EasyLoading.dismiss();
+      EasyLoading.dismiss();
       isLoading.value = false;
     }
   }
 
+  Future<void> signUp() async {
+    if (!validateFieldsSignUp()) return;
 
+    final name = nameController.text.trim();
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
 
-
-Future<void> signUp() async {
-  if (!validateFieldsSignUp()) return;
-
-  final name = nameController.text.trim();
-  final email = emailController.text.trim();
-  final password = passwordController.text.trim();
-
-  // Validation
-  if (name.isEmpty) {
-    EasyLoading.showError("Name cannot be empty");
-    return;
-  }
-
-  if (email.isEmpty || !GetUtils.isEmail(email)) {
-    EasyLoading.showError("Enter a valid email address");
-    return;
-  }
-
-  if (password.isEmpty || password.length < 6) {
-    EasyLoading.showError("Password must be at least 6 characters");
-    return;
-  }
-
-  try {
-    EasyLoading.show(status: 'Creating Account...');
-
-    // Firebase Authentication
-    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-
-    User? user = userCredential.user;
-    if (user != null) {
-      // Store User Data in Firestore
-      await _firestore.collection("users").doc(user.uid).set({
-        "uid": user.uid,
-        "name": name,
-        "email": email,
-        "createdAt": DateTime.now(),
-      });
-    await  fetchUserData(user.uid);
-Get.to(LoginScreen());
-      EasyLoading.showSuccess("Signup Success");
+    // Validation
+    if (name.isEmpty) {
+      EasyLoading.showError("Name cannot be empty");
+      return;
     }
-  } on FirebaseAuthException catch (e) {
-    EasyLoading.showError(e.message ?? "Signup Failed");
-  } catch (e) {
-    EasyLoading.showError("Something went wrong");
-  } finally {
-    EasyLoading.dismiss();
+
+    if (email.isEmpty || !GetUtils.isEmail(email)) {
+      EasyLoading.showError("Enter a valid email address");
+      return;
+    }
+
+    if (password.isEmpty || password.length < 6) {
+      EasyLoading.showError("Password must be at least 6 characters");
+      return;
+    }
+
+    try {
+      EasyLoading.show(status: 'Creating Account...');
+
+      // Firebase Authentication
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      User? user = userCredential.user;
+      if (user != null) {
+        // Store User Data in Firestore
+        await _firestore.collection("users").doc(user.uid).set({
+          "uid": user.uid,
+          "name": name,
+          "email": email,
+          "createdAt": DateTime.now(),
+        });
+        await fetchUserData(user.uid);
+        Get.to(LoginScreen());
+        EasyLoading.showSuccess("Signup Success");
+      }
+    } on FirebaseAuthException catch (e) {
+      EasyLoading.showError(e.message ?? "Signup Failed");
+    } catch (e) {
+      EasyLoading.showError("Something went wrong");
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
-}
-
-
-
 
   bool validateFieldsSignUp() {
     if (emailController.text.trim().isEmpty) {
@@ -175,16 +179,13 @@ Get.to(LoginScreen());
       Get.snackbar("Oops!", "name is required.");
       return false;
     }
-     if (passwordController.text != confirmpasswordController.text) {
+    if (passwordController.text != confirmpasswordController.text) {
       Get.snackbar("Oops!", "password donot match");
       return false;
     }
 
     return true;
   }
-
-
-
 
   bool validateFieldsSignin() {
     if (loginemailController.text.trim().isEmpty) {
@@ -195,47 +196,41 @@ Get.to(LoginScreen());
       Get.snackbar("Oops!", "Password is required.");
       return false;
     }
-   
 
     return true;
   }
 
+  Future<bool> checkIfUserExists(String email) async {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: 'temporary_password', // Use a dummy password
+      );
 
-Future<bool> checkIfUserExists(String email) async {
-  try {
-    
-    final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: 'temporary_password', // Use a dummy password
-    );
+      await credential.user?.delete();
 
-  
-    await credential.user?.delete();
-
-    return false;
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'email-already-in-use') {
-   
-      return true;
-    } else {
-    
+      return false;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        return true;
+      } else {
+        SnackbarUtils.showCustomSnackbar(
+          title: "Error",
+          message: "Failed to check user existence: ${e.message}",
+          backgroundColor: primaryColor,
+        );
+        return false;
+      }
+    } catch (e) {
       SnackbarUtils.showCustomSnackbar(
         title: "Error",
-        message: "Failed to check user existence: ${e.message}",
-        backgroundColor:primaryColor,
+        message: "Failed to check user existence: $e",
+        backgroundColor: primaryColor,
       );
       return false;
     }
-  } catch (e) {
-   
-    SnackbarUtils.showCustomSnackbar(
-      title: "Error",
-      message: "Failed to check user existence: $e",
-      backgroundColor:primaryColor,
-    );
-    return false;
   }
-}
 
   // Future<void> handleUserAuth() async {
   //   if (!validateFieldsSignin()) return;
@@ -263,8 +258,6 @@ Future<bool> checkIfUserExists(String email) async {
   //     isLoading.value = false;
   //   }
   // }
-
-
 
   // Future<void> signOut() async {
   //   try {
@@ -304,11 +297,10 @@ Future<bool> checkIfUserExists(String email) async {
   //   }
   // }
 
-
-
   Future<void> fetchUserData(String userId) async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
           .collection('users')
           .doc(userId)
           .get();
@@ -320,6 +312,4 @@ Future<bool> checkIfUserExists(String email) async {
       print("Error fetching user data: $e");
     }
   }
-
-
 }
