@@ -5,17 +5,9 @@
 *.swp
 .DS_Store
 .atom/
-<<<<<<< HEAD
 .buildlog/
 .history
 .svn/
-=======
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
->>>>>>> aca913fefa8b4bfd95e3bad88ad355d6b5f46b6d
 migrate_working_dir/
 
 # IntelliJ related
@@ -54,4 +46,9 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+<<<<<<< HEAD
+# .gitignore
+.env
+=======
 >>>>>>> aca913fefa8b4bfd95e3bad88ad355d6b5f46b6d
+>>>>>>> 429c7e72718d970bec3743529533a305d6a01fe5

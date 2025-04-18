@@ -298,18 +298,24 @@ class AuthController extends GetxController {
   // }
 
   Future<void> fetchUserData(String userId) async {
+    print(":::: the userId IS HERE IN signup is here :${userId}");
     try {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
-          .instance
+      final snapshot = await FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
           .get();
 
-      if (snapshot.exists) {
-        userData.value = UserModel.fromFirestore(snapshot.data()!);
+      if (snapshot.exists && snapshot.data() != null) {
+        print(":::: the data is her:${snapshot.data()}");
+        final user = UserModel.fromFirestore(snapshot.data()!);
+        userData.value = user;
+        await localStorage. setUserData(user); // Properly await the storage operation
+        print('User data fetched and stored successfully');
       }
     } catch (e) {
       print("Error fetching user data: $e");
+      rethrow;
     }
   }
 }
+

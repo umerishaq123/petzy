@@ -6,19 +6,20 @@ import 'package:pet_app/controllers/add_pet_post_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
 import 'package:pet_app/utils/snackbar_utilis.dart';
+import 'package:pet_app/views/peofile_screen/edit%20_post_Screen_image.dart';
 import 'package:pet_app/views/posts/post_detail_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
 import 'package:pet_app/widgets/custom_dropdown_widget.dart';
 import 'package:pet_app/widgets/custom_text_field.dart';
 
-class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({super.key});
+class EditProfilescreen extends StatefulWidget {
+  const EditProfilescreen({super.key});
 
   @override
-  State<AddPostScreen> createState() => _AddPostScreenState();
+  State<EditProfilescreen> createState() => _EditProfilescreenState();
 }
 
-class _AddPostScreenState extends State<AddPostScreen> {
+class _EditProfilescreenState extends State<EditProfilescreen> {
 
   
        
@@ -151,30 +152,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
     final height = controller.selectedHeight;
     final weight = controller.selectedWeight; // Fixed this line
 
-    if (petName.isEmpty) {
-      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please enter pet name");
-    }
-    if (petType == null || petType.isEmpty) {
-      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please select pet type");
-    }
-    if (gender == null || gender.isEmpty) {
-      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please select gender");
-    }
-    if (age.isEmpty) {
-      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please enter pet age");
-    }
-    if (color.isEmpty) {
-      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please enter pet color");
-    }
-    if (height == null || height.isEmpty) {
-      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please select pet height");
-    }
-    if (weight == null || weight.isEmpty) {
-      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please select pet weight");
-    }
+ 
 
     // All validations passed
-    Get.to(PostDetailScreen());
+    Get.to(EditProfileScreenImage());
   },
 )
 

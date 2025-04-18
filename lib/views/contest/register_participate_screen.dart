@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pet_app/controllers/add_pet_post_controller.dart';
+import 'package:pet_app/controllers/payment_controller.dart';
 import 'package:pet_app/controllers/pet_event_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
@@ -33,6 +35,8 @@ class _RegisterParticipateScreenState extends State<RegisterParticipateScreen> {
   @override
   Widget build(BuildContext context) {
       final PetEventController petEventController=Get.isRegistered()?Get.find<PetEventController>():Get.put(PetEventController(),permanent: true);
+      final PaymentController paymentController=Get.isRegistered()?Get.find<PaymentController>():Get.put(PaymentController(),permanent: true);
+      final AddPetPostController controller=Get.isRegistered()?Get.find<AddPetPostController>():Get.put(AddPetPostController(),permanent: true);
 
     return Scaffold(
       appBar: AppBar(
@@ -52,11 +56,11 @@ class _RegisterParticipateScreenState extends State<RegisterParticipateScreen> {
           radius: 45,
           child: CircleAvatar(
             radius: 43,
-            backgroundImage: petEventController.pickedImagePath.value.isNotEmpty
-                ? FileImage(File(petEventController.pickedImagePath.value))
+            backgroundImage: controller.pickedImagePath.value.isNotEmpty
+                ? FileImage(File(controller.pickedImagePath.value))
                 : null,
             backgroundColor: primaryColor,
-            child: petEventController.pickedImagePath.value.isEmpty
+            child: controller.pickedImagePath.value.isEmpty
                 ? Icon(Icons.person, size: 40, color: whiteColor)
                 : null,
           ),
@@ -67,7 +71,7 @@ class _RegisterParticipateScreenState extends State<RegisterParticipateScreen> {
       right: 0,
       child: GestureDetector(
         onTap: () {
-          petEventController.pickImageFromGallery();
+          controller.pickImageFromGallery();
         },
         child: Icon(
           Icons.upload_file_sharp,
@@ -85,7 +89,7 @@ SizedBox(height: 20,),
               padding:  EdgeInsets.symmetric(horizontal: 120.w,),
               child: CustomButtonWidget(
                 onPressed: (){
-                  petEventController.pickImageFromGallery();
+                  controller.pickImageFromGallery();
                 },
                 height: 35.h,
                 text: "Upload",textColor: whiteColor,),
@@ -95,8 +99,8 @@ SizedBox(height: 20,),
             Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit quisque",
             style: GoogleFonts.quicksand(fontSize: 16.sp,
              fontWeight: FontWeight.w400),),
-              SizedBox(height:20.h ,),
-            CustomFeeCardWidget(onPayNowPressed: () {  },),
+            
+           
               SizedBox(height:20.h ,),
             
                Padding(
@@ -203,7 +207,20 @@ SizedBox(height: 20,),
                    CustomButtonWidget(text: "Next",
                    textColor: whiteColor,
                    onPressed: (){
-                    Get.to(PostDetailScreen());
+          showDialog(
+  context: context,
+  builder: (context) => CustomFeeCardDialog(
+    participationFee: 30.0,
+    petType: "Cat",
+    currency: "\$",
+    onPayNowPressed: ()async {
+       await paymentController.makePayment("500");
+    // Dismiss dialog
+      // Add your payment logic here
+    },
+  ),
+);
+
                    },)
                  
           ],),

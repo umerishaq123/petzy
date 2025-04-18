@@ -12,14 +12,14 @@ import 'package:pet_app/widgets/custom_buttom_widget.dart';
 import 'package:pet_app/widgets/custom_text_field.dart';
 import 'package:pet_app/widgets/input_field.dart';
 
-class PostDetailScreen extends StatefulWidget {
-  const PostDetailScreen({super.key});
+class EditProfileScreenImage extends StatefulWidget {
+  const EditProfileScreenImage({super.key});
 
   @override
-  State<PostDetailScreen> createState() => _PostDetailScreenState();
+  State<EditProfileScreenImage> createState() => _EditProfileScreenImageState();
 }
 
-class _PostDetailScreenState extends State<PostDetailScreen> {
+class _EditProfileScreenImageState extends State<EditProfileScreenImage> {
   PetEventController petEventController = Get.put(PetEventController());
 
   final PostImageController postImageController =

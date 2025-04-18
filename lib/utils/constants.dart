@@ -1,0 +1,1 @@
+String postLink = 'https://petApp/posts';
