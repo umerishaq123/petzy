@@ -15,6 +15,7 @@ class CustomButtonWidget extends StatelessWidget {
   final Color? textColor;
   final EdgeInsetsGeometry? buttonMargin;
   final Color? borerColor;
+  final bool isLoading; // ✅ Add this
 
   const CustomButtonWidget({
     super.key,
@@ -29,12 +30,13 @@ class CustomButtonWidget extends StatelessWidget {
     this.buttonMargin,
     this.textSize,
     this.borerColor,
+    this.isLoading = false, // ✅ Default false
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed ?? () {},
+      onTap: isLoading ? null : onPressed, // ✅ Disable if loading
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor ?? primaryColor,
@@ -48,16 +50,27 @@ class CustomButtonWidget extends StatelessWidget {
         width: width ?? double.infinity,
         height: height ?? 55.h,
         child: Center(
-          child: child ??
-              Text(
-                textAlign: TextAlign.center,
-                text ?? '',
-                style: GoogleFonts.poppins(
-                  fontSize: textSize ?? 14.sp,
-                  color: textColor ?? blackColor,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+          child: isLoading
+              ? SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      textColor ?? Colors.white,
+                    ),
+                    strokeWidth: 2,
+                  ),
+                )
+              : (child ??
+                  Text(
+                    textAlign: TextAlign.center,
+                    text ?? '',
+                    style: GoogleFonts.poppins(
+                      fontSize: textSize ?? 14.sp,
+                      color: textColor ?? blackColor,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  )),
         ),
       ),
     );

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pet_app/controllers/add_pet_post_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
+import 'package:pet_app/utils/snackbar_utilis.dart';
 import 'package:pet_app/views/posts/post_detail_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
 import 'package:pet_app/widgets/custom_dropdown_widget.dart';
@@ -17,19 +19,17 @@ class AddPostScreen extends StatefulWidget {
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
-    RxString selectedbreed = ''.obs;
-     RxString selectedGender = ''.obs;
-         RxString selectedHeight = ''.obs;
-             RxString selectedWeight = ''.obs;
-     final List<String> breedList = ['Husky', 'Germen', 'Other'];
-      final List<String> genderList = ['Male', 'Female', 'Other'];
-          final List<String> height = ['20 ft', '30ft', '40ft'];
-              final List<String> weightList = ['10w', '20w', '30w'];
+
+  
+       
   @override
   Widget build(BuildContext context) {
+    final AddPetPostController controller=Get.isRegistered()?Get.find():Get.put(AddPetPostController(),permanent: true);
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){}, icon: Icon(Icons.close)),
+        // leading: IconButton(onPressed: (){
+        //   Get.back();
+        // }, icon: Icon(Icons.close)),
         title: Text("Pet Details",style: GoogleFonts.quicksand(fontSize: 17.sp,
          fontWeight: FontWeight.w700),),
         centerTitle: true,
@@ -46,6 +46,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                Padding(
                   padding: EdgeInsets.only(top: 6.h),
                   child: CustomTextField(
+                    textEditingController: controller.petNameController,
                     iconAssetPath: '',
                     hintText: 'Pet name',
                     containsIcon: false,
@@ -55,37 +56,29 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   Obx((){
                     return  CustomDropdownWidget(
                        hintText: "Pet Type",
-                      selectedValue: selectedbreed.value.isEmpty
+                      selectedValue:controller. selectedbreed.value.isEmpty
                                   ? null
-                                  : selectedbreed.value,
+                                  : controller. selectedbreed.value,
                               onChanged: (value) {
                                 if (value != null) {
-                                  selectedbreed.value = value;
+                                controller..selectTpe(value) ;
                                 }
                               },
-                              valueList: breedList,
+                              valueList: controller.breedList,
                               borderRadius: BorderRadius.all(Radius.circular(5.r)),);
                   }),
-                  SizedBox(height:20.h ,),
-               Padding(
-                  padding: EdgeInsets.only(top: 6.h),
-                  child: CustomTextField(
-                    iconAssetPath: '',
-                    hintText: 'Breed',
-                    containsIcon: false,
-                  ),
-                ),
+               
                    SizedBox(height:20.h ,),
                   Obx((){
-                    return  CustomDropdownWidget(selectedValue: selectedGender.value.isEmpty
+                    return  CustomDropdownWidget(selectedValue:controller. selectedGender.value.isEmpty
                                   ? null
-                                  : selectedGender.value,
+                                  :controller. selectedGender.value,
                               onChanged: (value) {
                                 if (value != null) {
-                                  selectedGender.value = value;
+                                 controller.selectGender(value);
                                 }
                               },
-                              valueList: genderList,
+                              valueList:controller. genderList,
                               borderRadius: BorderRadius.all(Radius.circular(5.r)),);
                   }),
                     SizedBox(height:20.h ,),
@@ -95,6 +88,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                             child: Padding(
                                             padding: EdgeInsets.only(top: 6.h),
                                             child: CustomTextField(
+                                              textEditingController: controller.ageController,
                                               iconAssetPath: '',
                                               hintText: 'Age',
                                               containsIcon: false,
@@ -106,6 +100,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     child: Padding(
                     padding: EdgeInsets.only(top: 6.h),
                     child: CustomTextField(
+                      textEditingController: controller.colorController,
                       iconAssetPath: '',
                       hintText: 'color',
                       containsIcon: false,
@@ -116,15 +111,15 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     ),
                       SizedBox(height:20.h ,),
                   Obx((){
-                    return  CustomDropdownWidget(selectedValue: selectedHeight.value.isEmpty
+                    return  CustomDropdownWidget(selectedValue:controller. selectedHeight.value.isEmpty
                                   ? null
-                                  : selectedHeight.value,
+                                  :controller. selectedHeight.value,
                               onChanged: (value) {
                                 if (value != null) {
-                                  selectedHeight.value = value;
+                                 controller.selectHeight(value);
                                 }
                               },
-                              valueList: height,
+                              valueList:controller. height,
                                hintText: "Height",
                               borderRadius: BorderRadius.all(Radius.circular(5.r)),);
                   }),
@@ -132,23 +127,57 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   Obx((){
                     return  CustomDropdownWidget(
                      hintText: "Weight",
-                      selectedValue: selectedWeight.value.isEmpty
+                      selectedValue:controller. selectedWeight.value.isEmpty
                                   ? null
-                                  : selectedWeight.value,
+                                  :controller. selectedWeight.value,
                               onChanged: (value) {
                                 if (value != null) {
-                                  selectedWeight.value = value;
+                                  controller.selectWeight(value);
                                 }
                               },
-                              valueList: weightList,
+                              valueList:controller. weightList,
                               borderRadius: BorderRadius.all(Radius.circular(5.r)),);
                   }),
                    SizedBox(height:20.h ,),
-                   CustomButtonWidget(text: "Next",
-                   textColor: whiteColor,
-                   onPressed: (){
-                    Get.to(PostDetailScreen());
-                   },)
+                  CustomButtonWidget(
+  text: "Next",
+  textColor: whiteColor,
+  onPressed: () {
+    final petName = controller.petNameController.text.trim();
+    final petType = controller.selectedbreed;
+    final gender = controller.selectedGender;
+    final age = controller.ageController.text.trim();
+    final color = controller.colorController.text.trim();
+    final height = controller.selectedHeight;
+    final weight = controller.selectedWeight; // Fixed this line
+
+    if (petName.isEmpty) {
+      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please enter pet name");
+    }
+    if (petType == null || petType.isEmpty) {
+      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please select pet type");
+    }
+    if (gender == null || gender.isEmpty) {
+      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please select gender");
+    }
+    if (age.isEmpty) {
+      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please enter pet age");
+    }
+    if (color.isEmpty) {
+      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please enter pet color");
+    }
+    if (height == null || height.isEmpty) {
+      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please select pet height");
+    }
+    if (weight == null || weight.isEmpty) {
+      return SnackbarUtils.showCustomSnackbar(title: "Error", message: "Please select pet weight");
+    }
+
+    // All validations passed
+    Get.to(PostDetailScreen());
+  },
+)
+
                  
           ],),
         ),

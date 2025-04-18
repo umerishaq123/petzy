@@ -27,4 +27,5 @@ const String contestScreenIcon = 'assets/images/Contestimg.png';
 const String galleryIcon = 'assets/images/galleryicons.png';
 const String cameraIcon = 'assets/images/Camera .png';
 const String sendIcon = 'assets/images/Send.png';
+const String menu = 'assets/images/menuButton.png';
 

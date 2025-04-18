@@ -7,6 +7,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pet_app/utils/colors.dart';
+import 'package:pet_app/utils/extensions/local_storage.dart';
 import 'package:pet_app/views/home_screens/nav_bar_screen.dart';
 import 'package:pet_app/views/peofile_screen/follower_screen.dart';
 import 'package:pet_app/views/peofile_screen/notification_screen.dart';
@@ -72,3 +73,9 @@ void configLoading() {
     ..radius = 10.0
     ..dismissOnTap = false;
 }
+void checkStoredUserId() async {
+  final LocalStorage localStorage = LocalStorage();
+  String? id = await localStorage.getValue("userId");
+  print("Stored User ID is: $id");
+}
+

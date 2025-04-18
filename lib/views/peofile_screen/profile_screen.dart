@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pet_app/controllers/auth_controller.dart';
 import 'package:pet_app/controllers/home_controller.dart';
+import 'package:pet_app/controllers/profile_controller.dart';
 import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
 import 'package:pet_app/views/peofile_screen/follower_screen.dart';
 import 'package:pet_app/views/peofile_screen/following_screen.dart';
 import 'package:pet_app/widgets/custom_buttom_widget.dart';
+import 'package:pet_app/widgets/shimmer_widget.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -17,6 +20,13 @@ class ProfileScreen extends StatelessWidget {
   final HomeController controller = Get.isRegistered()
       ? Get.find<HomeController>()
       : Get.put(HomeController());
+
+       final ProfileController profileController = Get.isRegistered()
+      ? Get.find<ProfileController>()
+      : Get.put(ProfileController());
+         final AuthController authController= Get.isRegistered()
+      ? Get.find<AuthController>()
+      : Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +50,7 @@ class ProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${userData.name}",
+                              "${authController.userData.value?.name}",
                               style: GoogleFonts.quicksand(
                                   fontSize: 16.sp, fontWeight: FontWeight.w700),
                             ),
@@ -74,13 +84,18 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            Text(
-                              "${userData.postcount}",
+                            Obx((){
+                              return     Text(
+                              "${profileController.petdata.length.toString()}",
                               style: GoogleFonts.quicksand(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w700,
                                   color: blackColor),
-                            ),
+                            );
+                            
+                            
+                            }),
+                        
                             SizedBox(
                               height: 2.h,
                             ),
@@ -227,34 +242,71 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(
               height: 15.h,
             ),
-            SizedBox(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                    childAspectRatio: 1.0,
-                  ),
-                  itemCount: controller.posts.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: AssetImage(controller.posts[index]),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    );
-                  },
-                ),
+        Obx(() {
+  if (profileController.isloading.value) {
+    // Show shimmer loading
+    return GridView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: 10,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 8.0,
+        mainAxisSpacing: 8.0,
+        childAspectRatio: 1.0,
+      ),
+      itemBuilder: (context, index) {
+        return Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 15.w),
+          child: ShimmerWidget.rectangular(
+            width: double.infinity,
+            height: 100.h,
+          ),
+        );
+      },
+    );
+  } else if (profileController.userPost.isEmpty) {
+    // Show "No posts found" message
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Center(
+        child: Text(
+          'No posts found',
+          style: TextStyle(fontSize: 16.sp, color: Colors.grey),
+        ),
+      ),
+    );
+  } else {
+    // Show actual grid of posts
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        itemCount: profileController.userPost.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 8.0,
+          mainAxisSpacing: 8.0,
+          childAspectRatio: 1.0,
+        ),
+        itemBuilder: (context, index) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                image: NetworkImage(profileController.userPost[index]),
+                fit: BoxFit.cover,
               ),
             ),
+          );
+        },
+      ),
+    );
+  }
+}),
+
           ],
         ),
       ),

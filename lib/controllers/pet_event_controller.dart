@@ -1,25 +1,20 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:pet_app/models/pet_event_model.dart';
 import 'package:pet_app/utils/images.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 class PetEventController extends GetxController {
+TextEditingController countryController=TextEditingController();
+
+
+
   List<PetEventModel> peteventList = <PetEventModel>[].obs;
 
 
 
-  //image picker
-  final RxString pickedImagePath = ''.obs;
-
-  Future<void> pickImageFromGallery() async {
-    
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      pickedImagePath.value = image.path;
-    }
-  }
+  
 
   @override
   void onInit() {

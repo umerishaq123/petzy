@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:pet_app/models/pet_model.dart';
 import 'package:pet_app/models/user_model.dart';
+import 'package:pet_app/utils/colors.dart';
 import 'package:pet_app/utils/images.dart';
+import 'package:pet_app/utils/snackbar_utilis.dart';
 
 class HomeController extends GetxController{
   var isShareList = <bool>[].obs;
@@ -13,6 +17,7 @@ class HomeController extends GetxController{
     super.onInit();
     // Initialize your user data here or wherever you load it
     // Then initialize isShareList
+    fetchAllPost();
     initializeShareList();
   }
 
@@ -72,5 +77,55 @@ class HomeController extends GetxController{
   ).obs; 
 
   
+//
+List<PetModel>  postList=<PetModel>[].obs;
+FirebaseFirestore firebaseFirestore=FirebaseFirestore.instance;
+var isloading=false.obs;
+var isloadingDelete=false.obs;
 
+
+Future<void> fetchAllPost() async {
+  try {
+    isloading.value = true;
+
+    // Get all documents from 'pet' collection
+    final querySnapshot = await firebaseFirestore.collection('pet').get();
+
+    // Convert each document into a PetModel and add to postList
+final data= querySnapshot.docs.map((doc) {
+      return PetModel.fromJson(doc.data()); // Assuming you have fromJson()
+    }).toList();
+    postList.clear();
+    postList.addAll(data);
+
+
+    isloading.value = false;
+  } catch (error) {
+    isloading.value = false;
+    print("The error in fetchAllPost is: $error");
+    throw Exception(error.toString());
+  }
+}
+
+
+
+Future<void> deletePost(String docId,context)async{
+  try{
+    isloadingDelete.value=true;
+    await firebaseFirestore.collection('pet').doc(docId).delete();
+
+
+   
+   navigator?.pop(context);
+     SnackbarUtils.showCustomSnackbar(title: "Success", message: "Post is Deleted Sucessfully");
+
+    isloading.value = false;
+  }catch(error){
+    
+    SnackbarUtils.showCustomSnackbar(title: "Error", message: "Post is Deleted failed",backgroundColor: redColor);
+    isloading.value = false;
+    print("The error in fetchAllPost is: $error");
+    throw Exception(error.toString());
+  }
+}
 }

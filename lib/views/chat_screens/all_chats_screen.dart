@@ -46,11 +46,11 @@ class AllChatsScreen extends StatelessWidget {
                 padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: (){
-                        Get.to(()=>ChatDetailScreen(chatData: allChatData, receiverId: allChatData.uid,));
-                      },
-                      child: CustomChatItemWidget(chatData: allChatData, index: index,)),
+                    // GestureDetector(
+                    //   onTap: (){
+                    //     Get.to(()=>ChatDetailScreen(chatData: allChatData, receiverId: allChatData.uid,));
+                    //   },
+                      // child: CustomChatItemWidget(chatData: allChatData, index: index,)),
                     Divider(color: blackColor.withOpacity(0.1),)
                   ],
                 ),
