@@ -11,10 +11,13 @@ import 'package:pet_app/widgets/chat_bubble_widget.dart';
 import 'package:pet_app/widgets/message_input_widget.dart';
 
 class ChatDetailScreen extends StatelessWidget {
-  final UserModel chatData;
+  final bool? iscome;
+  final String? name;
+  final String? image;
+  final UserModel? chatData;
   final String receiverId;
   
-  ChatDetailScreen({super.key, required this.chatData, required this.receiverId});
+  ChatDetailScreen({super.key, this.chatData, required this.receiverId,this.iscome,this.name,this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +41,13 @@ class ChatDetailScreen extends StatelessWidget {
                     backgroundColor: blackColor,
                     radius: 20.r,
                     child: Image.network(
-                      chatData.image,
+                   iscome==true?image??"":chatData?.image??"",
                       width: 40.w,
                       height: 40.h,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset(
-                          chatData.image,
+                    iscome==true?image??"":chatData?.image??"",
                           width: 40.w,
                           height: 40.h,
                           fit: BoxFit.cover,
@@ -54,7 +57,7 @@ class ChatDetailScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 10.w),
                   Text(
-                    chatData.name,
+           iscome==true?name??"" : chatData?.name??"",
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       fontSize: 16.sp,

@@ -6,6 +6,7 @@ import 'package:pet_app/controllers/auth_controller.dart';
 import 'package:pet_app/controllers/home_controller.dart';
 import 'package:pet_app/controllers/profile_controller.dart';
 import 'package:pet_app/utils/colors.dart';
+import 'package:pet_app/utils/extensions/local_storage.dart';
 import 'package:pet_app/utils/images.dart';
 import 'package:pet_app/views/peofile_screen/follower_screen.dart';
 import 'package:pet_app/views/peofile_screen/following_screen.dart';
@@ -13,10 +14,15 @@ import 'package:pet_app/widgets/custom_buttom_widget.dart';
 import 'package:pet_app/widgets/shimmer_widget.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   final bool iscome;
   ProfileScreen({super.key,required this.iscome});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   final HomeController controller = Get.isRegistered()
       ? Get.find<HomeController>()
       : Get.put(HomeController());
@@ -24,9 +30,25 @@ class ProfileScreen extends StatelessWidget {
        final ProfileController profileController = Get.isRegistered()
       ? Get.find<ProfileController>()
       : Get.put(ProfileController());
+
          final AuthController authController= Get.isRegistered()
       ? Get.find<AuthController>()
       : Get.put(AuthController());
+       String userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserName();
+ 
+  }
+
+  void loadUserName() async {
+    final user = await LocalStorage().getUserData();
+    setState(() {
+      userName = user?.name ?? '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +72,8 @@ class ProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${authController.userData.value?.name}",
+                              "${userName
+                              }",
                               style: GoogleFonts.quicksand(
                                   fontSize: 16.sp, fontWeight: FontWeight.w700),
                             ),
@@ -187,7 +210,7 @@ class ProfileScreen extends StatelessWidget {
                           borderRadius: 10.r,
                           textColor: whiteColor,
                           backgroundColor: primaryColor,
-                          text:iscome?"View pet details":
+                          text:widget.iscome?"View pet details":
                           
                            "Follow",
                         ),
