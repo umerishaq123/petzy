@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pet_app/controllers/edit_post_controller.dart';
 import 'package:pet_app/controllers/home_controller.dart';
 import 'package:pet_app/models/pet_model.dart';
 import 'package:pet_app/utils/colors.dart';
@@ -27,6 +28,7 @@ class _CustomAlertBoxState extends State<CustomAlertBox> {
 
   @override
   Widget build(BuildContext context) {
+    EditPostController controller=Get.isRegistered()?Get.find<EditPostController>():Get.put(EditPostController(),permanent: true);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -67,9 +69,10 @@ class _CustomAlertBoxState extends State<CustomAlertBox> {
                SizedBox(height: 5.h,),
                widget.isuser?
               GestureDetector(
-                onTap: () {
+                onTap: () async{
+            
                   // Handle edit action
-              Get.to(EditProfilescreen());
+              Get.to(EditProfilescreen(data: widget.data,));
                 },
                 child: Text("Edit",
                   style: GoogleFonts.poppins(
